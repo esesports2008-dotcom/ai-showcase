@@ -1,0 +1,148 @@
+:root {
+  --bg: #0b0b0f;
+  --neon: #ff2fdc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  font-family: system-ui, sans-serif;
+  color: white;
+}
+
+/* TOP BAR */
+.top-bar {
+  display: flex;
+  gap: 10px;
+  padding: 12px;
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 10;
+}
+
+.filter {
+  flex: 1;
+  padding: 10px;
+  border-radius: 20px;
+  border: none;
+  background: #1a1a22;
+  color: #aaa;
+}
+
+.filter.active {
+  background: var(--neon);
+  color: black;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 12px;
+}
+
+.card {
+  position: relative;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  display: block;
+  transition: 0.4s ease;
+}
+
+.locked img {
+  filter: blur(8px);
+}
+
+/* LOCK */
+.lock {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 30px;
+  color: var(--neon);
+}
+
+/* NEON COUNTDOWN RING */
+.lock svg {
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  transform: rotate(-90deg);
+}
+
+.lock circle {
+  fill: none;
+  stroke: var(--neon);
+  stroke-width: 5;
+  stroke-dasharray: 188;
+  stroke-dashoffset: 188;
+  animation: countdown 15s linear forwards;
+  filter: drop-shadow(0 0 6px var(--neon));
+}
+
+@keyframes countdown {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* UNLOCK ANIMATION */
+.card.unlocking img {
+  animation: unlockZoom 0.8s ease forwards;
+}
+
+@keyframes unlockZoom {
+  0% {
+    transform: scale(1);
+    filter: blur(8px);
+  }
+  60% {
+    transform: scale(1.05);
+    filter: blur(2px);
+  }
+  100% {
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+.card.unlocked {
+  animation: neonFlash 0.6s ease;
+}
+
+@keyframes neonFlash {
+  0% { box-shadow: 0 0 0 transparent; }
+  50% { box-shadow: 0 0 20px var(--neon); }
+  100% { box-shadow: 0 0 0 transparent; }
+}
+
+/* MODAL */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: none;
+  z-index: 20;
+}
+
+.modal-grid {
+  margin-top: 60px;
+}
+
+.close {
+  position: fixed;
+  right: 16px;
+  top: 10px;
+  font-size: 34px;
+} 
